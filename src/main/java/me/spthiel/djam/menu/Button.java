@@ -7,6 +7,8 @@ import me.spthiel.djam.util.Vec2i;
 
 import java.awt.*;
 import java.awt.event.*;
+import java.awt.font.FontRenderContext;
+import java.awt.font.GlyphVector;
 import java.awt.image.BufferedImage;
 
 public class Button extends ComponentAdapter implements MouseMotionListener, Drawable, MouseListener {
@@ -16,17 +18,19 @@ public class Button extends ComponentAdapter implements MouseMotionListener, Dra
     private int x,y,dx,dy;
     private boolean hover = false;
     private Runnable onClick;
+    private String text;
 
-    public Button(BufferedImage texture, BufferedImage hoverTexture, Vec2d xy, Vec2d dxdy, Runnable onClick) {
+    public Button(BufferedImage texture, BufferedImage hoverTexture, Vec2d xy, Vec2d dxdy, String text, Runnable onClick) {
         this.texture = texture;
         this.hoverTexture = hoverTexture;
         this.xy = xy;
         this.dxdy = dxdy;
         this.onClick = onClick;
         updatePosition();
+        this.text = text;
     }
 
-    public Button(BufferedImage texture, BufferedImage hoverTexture, double x, double y, double dx, double dy, Runnable onClick) {
+    public Button(BufferedImage texture, BufferedImage hoverTexture, double x, double y, double dx, double dy, String text, Runnable onClick) {
         this.texture = texture;
         this.hoverTexture = hoverTexture;
         this.xy = new Vec2d();
@@ -37,9 +41,10 @@ public class Button extends ComponentAdapter implements MouseMotionListener, Dra
         dxdy.y = dy;
         this.onClick = onClick;
         updatePosition();
+        this.text = text;
     }
 
-    public Button(BufferedImage texture, BufferedImage hoverTexture, int x, int y, int width, int height, Runnable onClick) {
+    public Button(BufferedImage texture, BufferedImage hoverTexture, int x, int y, int width, int height, String text, Runnable onClick) {
         this.texture = texture;
         this.hoverTexture = hoverTexture;
         this.xy = new Vec2d();
@@ -50,6 +55,7 @@ public class Button extends ComponentAdapter implements MouseMotionListener, Dra
         dxdy.y = (y+height)/800.0;
         this.onClick = onClick;
         updatePosition();
+        this.text = text;
     }
 
     private boolean isInRect(int x, int y) {
@@ -72,11 +78,27 @@ public class Button extends ComponentAdapter implements MouseMotionListener, Dra
 
     @Override
     public void draw(Graphics g) {
+        Graphics2D g2d = (Graphics2D)g;
         if(hover) {
-            g.drawImage(hoverTexture, 100, 100, 100, 100, null);
+            g.drawImage(hoverTexture, x, y, dx-x, dy-y, null);
         } else {
             g.drawImage(texture, x, y, dx-x, dy-y, null);
         }
+        g2d.setFont(getDesiredFont());
+        Rectangle rect = getStringBounds(g2d, text);
+        int startX = x+((dx-x)/2-rect.width/2);
+        int startY = y+((dy-y)/2-rect.height/2);
+        g2d.drawString(text, startX, startY);
+    }
+
+    private Rectangle getStringBounds(Graphics2D g2, String str) {
+        FontRenderContext frc = g2.getFontRenderContext();
+        GlyphVector gv = g2.getFont().createGlyphVector(frc, str);
+        return gv.getPixelBounds(null, x, y);
+    }
+
+    private Font getDesiredFont() {
+        return new Font(Font.SANS_SERIF, Font.BOLD, 20);
     }
 
     @Override

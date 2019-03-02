@@ -12,11 +12,11 @@ import java.awt.event.KeyEvent;
 public class MapUpdater implements Updateable, Drawable {
 
     public static int defaultTileSize = 100;
-    private static float movepertick = 0.1f;
+    public static float movepertick = 0.1f;
 
     private Map map;
-    private float cameraX = 0, cameraY = 0;
-    private float zoom = 1;
+    public static float cameraX = 0, cameraY = 0;
+    public static float zoom = 1;
 
     public MapUpdater(Map map) {
         this.map = map;
@@ -55,7 +55,6 @@ public class MapUpdater implements Updateable, Drawable {
         }
 
         drawMap(g);
-        drawSidebars(g);
     }
 
     private void drawMap(Graphics g) {
@@ -105,17 +104,6 @@ public class MapUpdater implements Updateable, Drawable {
                             }
                         }
                 );
-    }
-
-    private void drawSidebars(Graphics g) {
-
-        Rectangle rect = Main.getGame().getBounds();
-        g.setColor(new Color(0x111111));
-        g.fillRect(0, 0, rect.width, 40);
-        g.fillRect(0, rect.height-40, rect.width, 50);
-        g.fillRect(0, 0, 200, rect.height);
-        g.fillRect(rect.width-200, 0, 200, rect.height);
-
     }
 
     @Override

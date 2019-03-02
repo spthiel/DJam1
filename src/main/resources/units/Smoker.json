@@ -1,0 +1,41 @@
+{
+    "file":"unit1.png",
+    "width":6000,
+    "height":500,
+    "spritesize":500,
+    "sprites": [
+        {
+            "type":"walking",
+            "base": {
+                "start": 0,
+                "end": 2
+            },
+            "overlay": {
+                "start": 6,
+                "end": 8
+            }
+        },
+        {
+            "type":"idle",
+            "base": {
+                "start": 2,
+                "end": 3
+            },
+            "overlay": {
+                "start": 8,
+                "end": 9
+            }
+    },
+    {
+            "type":"attacking",
+            "base": {
+                "start": 10,
+                "end": 11
+            },
+            "overlay": {
+                "start": 10,
+                "end": 11
+            }
+        }
+    ]
+}

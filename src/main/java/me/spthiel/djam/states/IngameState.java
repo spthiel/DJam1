@@ -17,6 +17,7 @@ public class IngameState extends GameState {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        game.setBorderactive(true);
     }
 
     @Override

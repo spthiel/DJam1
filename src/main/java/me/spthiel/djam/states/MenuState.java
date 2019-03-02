@@ -17,13 +17,22 @@ public class MenuState extends GameState implements MouseMotionListener, MouseLi
     public MenuState() {
         buttons = new ArrayList<>();
         try {
-            addButton(new Button(Main.missingTexture, ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("textures/testunit.png"))), 0.1, 0.1, 0.9, 0.2, () -> System.out.println("I haz been clicked")));
+            addButton(new Button(
+                    Main.missingTexture,
+                    ImageIO.read(Objects.requireNonNull(this.getClass().getClassLoader().getResource("textures/testunit.png"))),
+                    0.1,
+                    0.1,
+                    0.9,
+                    0.2,
+                    "Play",
+                    () -> Main.setState(new IngameState())));
         } catch (IOException e) {
             e.printStackTrace();
         }
         game.addMouseListener(this);
         game.addMouseMotionListener(this);
         game.addComponentListener(this);
+        game.setBorderactive(false);
     }
 
     @Override

@@ -2,6 +2,8 @@ package me.spthiel.djam;
 
 import me.spthiel.djam.states.GameState;
 import me.spthiel.djam.states.IngameState;
+import me.spthiel.djam.states.MenuState;
+import me.spthiel.djam.team.Unit;
 import me.spthiel.djam.util.Resources;
 
 import javax.imageio.ImageIO;
@@ -29,7 +31,8 @@ public class Main {
 
     public static void main(String[] args) {
         game = new Game();
-        setState(new IngameState());
+        setState(new MenuState());
+        Object t = Unit.Units.SMOKER;
 
         Thread updateLoop = new Thread(() -> {
 
